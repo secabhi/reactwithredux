@@ -21,7 +21,7 @@ class MoviesPage extends React.Component {
 
     titleSaved(event) {
         //alert(`Saving ${this.state.movies.title}`);
-        this.props.dispatch(movieAction.createMovies(this.state.movies));
+        this.props.createMovies(this.state.movies);
     }
 
     render() {
@@ -48,8 +48,8 @@ class MoviesPage extends React.Component {
 }
 
 MoviesPage.propTypes = {
-    dispatch: PropTypes.func.isRequired,
-    movies: PropTypes.array.isRequired
+    movies: PropTypes.array.isRequired,
+    createMovies:PropTypes.func.isRequired
 };
 
 function mapStateToprops(state, ownProps) {
@@ -58,4 +58,10 @@ function mapStateToprops(state, ownProps) {
     };
 }
 
-export default connect(mapStateToprops)(MoviesPage);
+function mapDispatchProps(dispatch) {
+    return{
+        createMovies:movies => dispatch(movieAction.createMovies(movies))
+    };
+}
+
+export default connect(mapStateToprops,mapDispatchProps)(MoviesPage);
