@@ -1,5 +1,6 @@
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
+import {bindActionCreators} from 'redux';
 import * as movieAction from '../../Actions/moviesAction';
 
 class MoviesPage extends React.Component {
@@ -21,7 +22,7 @@ class MoviesPage extends React.Component {
 
     titleSaved(event) {
         //alert(`Saving ${this.state.movies.title}`);
-        this.props.createMovies(this.state.movies);
+        this.props.actions.createMovies(this.state.movies);
     }
 
     render() {
@@ -49,7 +50,7 @@ class MoviesPage extends React.Component {
 
 MoviesPage.propTypes = {
     movies: PropTypes.array.isRequired,
-    createMovies:PropTypes.func.isRequired
+    actions:PropTypes.object.isRequired
 };
 
 function mapStateToprops(state, ownProps) {
@@ -60,7 +61,7 @@ function mapStateToprops(state, ownProps) {
 
 function mapDispatchProps(dispatch) {
     return{
-        createMovies:movies => dispatch(movieAction.createMovies(movies))
+        actions: bindActionCreators(movieAction,dispatch)
     };
 }
 
