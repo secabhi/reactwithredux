@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
-import {bindActionCreators} from 'redux';
+import { bindActionCreators } from 'redux';
 import * as movieAction from '../../Actions/moviesAction';
 
 class MoviesPage extends React.Component {
@@ -32,16 +32,37 @@ class MoviesPage extends React.Component {
                     <h2>Add Movies</h2>
                     <input className="form-control" type="text" onChange={this.titleChanged}
                         value={this.state.movies.title} />
-                    <input style={{marginTop:10+'px'}} className="btn btn-primary" type="submit" onClick={this.titleSaved}
+                    <input style={{ marginTop: 10 + 'px' }} className="btn btn-primary" type="submit" onClick={this.titleSaved}
                         value="Save movie" />
                 </div>
                 <div className="col-md-8">
                     <h1>Movies List</h1>
-                    {this.props.movies.map(function (value, index) {
-                        return (
-                            <div key={index}>{value.title}</div>
-                        );
-                    })}
+
+                    <div className="container">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Firstname</th>
+                                    <th>Lastname</th>
+                                    <th>Email</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {this.props.movies.map(function (value, index) {
+                                    return (
+                                        <tr key={index}>
+                                            <td>{value.title}</td>
+                                            <td>{value.directorId.split('-').join(' ')}</td>
+                                            <td><a href={value.watchHref} target="_blank">{value.watchHref}</a></td>
+                                        </tr>
+                                    );
+                                })}
+
+                            </tbody>
+                        </table>
+                    </div>
+
+
                 </div>
             </div>
         );
@@ -50,7 +71,7 @@ class MoviesPage extends React.Component {
 
 MoviesPage.propTypes = {
     movies: PropTypes.array.isRequired,
-    actions:PropTypes.object.isRequired
+    actions: PropTypes.object.isRequired
 };
 
 function mapStateToprops(state, ownProps) {
@@ -60,9 +81,9 @@ function mapStateToprops(state, ownProps) {
 }
 
 function mapDispatchProps(dispatch) {
-    return{
-        actions: bindActionCreators(movieAction,dispatch)
+    return {
+        actions: bindActionCreators(movieAction, dispatch)
     };
 }
 
-export default connect(mapStateToprops,mapDispatchProps)(MoviesPage);
+export default connect(mapStateToprops, mapDispatchProps)(MoviesPage);
