@@ -8,6 +8,10 @@ export function movieSuccess(movie){
     return {type:'LOAD_MOVIE_SUCCESS',movie};
 }
 
+export function deleteMovies(movie){
+    return {type:'DELETE_MOVIE',movie}
+}
+
 export function loadMovies(){
     return function(dispatch){
         return movieApi.getAllMovies().then(movies=>{
